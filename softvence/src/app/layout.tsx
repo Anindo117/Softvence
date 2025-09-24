@@ -33,7 +33,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${publicSans.className} antialiased`}>
         <Navbar />
-        <main className="max-w-6xl mx-auto">
+        <main className="">
           {children}
         </main>
         <Footer />
