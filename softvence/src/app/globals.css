@@ -1,1 +1,7 @@
 @import "tailwindcss";
+@plugin "daisyui";
+
+.collapse-plus > .collapse-title::after {
+  left: auto !important;
+  right: 1rem !important;
+}

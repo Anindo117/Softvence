@@ -22,8 +22,8 @@ const Testimonials = () => {
     },
   ];
   return (
-    <section className="py-12 px-6 md:px-16 bg-scapeLight lg:mt-44 md:max-w-[1440px] md:pl-[120px]">
-      <h2 className="text-5xl font-bold text-center p-2">
+    <section className="px-6 bg-scapeLight lg:mt-44 mt-20 md:max-w-[1440px] md:px-[120px]">
+      <h2 className="lg:text-5xl text-3xl font-bold text-center p-2">
         What Our Users Are Saying
       </h2>
       <p className="text-center mt-3 w-full lg:max-w-md mx-auto text-sm text-gray-600">
@@ -31,12 +31,12 @@ const Testimonials = () => {
         app every day.
       </p>
       <div
-        className="grid md:grid-cols-3 gap-5 lg:mt-16 bg-[#9bff961d] pb-2"
+        className="grid md:grid-cols-3 gap-5 lg:mt-16 mt-7 pb-2"
         style={{
           backgroundImage: "url('/images/Ellipse 29.png')",
           backgroundRepeat: "no-repeat",
-          backgroundPosition: "0% bottom ",
-          backgroundSize: "30%",
+          backgroundPosition: "center right",
+          backgroundSize: "auto",
         }}
       >
         {items.map((item) => (
