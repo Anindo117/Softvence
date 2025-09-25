@@ -12,7 +12,7 @@ const Navbar = () => {
 
   return (
     <nav className="sticky top-0 z-40 bg-white h-24">
-      <div className="max-w-6xl mx-auto flex items-center justify-between px-4 py-5 md:px-6">
+      <div className="w-full mx-auto flex items-center justify-between px-4 py-5 md:max-w-[1440px] md:px-[120px]">
         <Link href="/" className="flex items-center gap-2" onClick={close}>
           <div className="w-32 rounded-md flex items-center justify-center font-bold">
             <Image
