@@ -28,7 +28,7 @@ const Features = () => {
   return (
     <div className="w-full md:max-w-[1440px] md:px-[120px] grid lg:grid-cols-4 grid-cols-1 md:grid-cols-2 gap-6 lg:mt-20">
       {items.map((item) => (
-        <div key={item.title} className="p-6 hover:rounded-2xl border-r-1 border-[#F4F6F8] hover:shadow-sm">
+        <div key={item.title} className="p-6 hover:rounded-2xl border-r-1 border-[#F4F6F8] hover:shadow-md shadow-[#39a4323d]">
           <Image src={item.icon} width={43} height={43} alt="icon" className="mb-5"/>
           <div className="text-lg font-bold">{item.title}</div>
           <p className="mt-2 text-sm text-gray-600">{item.desc}</p>
