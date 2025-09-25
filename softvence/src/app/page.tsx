@@ -1,6 +1,7 @@
 import BuiltFor from "@/Components/BuiltFor/page";
 import Features from "@/Components/Features/page";
 import Hero from "@/Components/Hero/page";
+import Testimonials from "@/Components/Testimonials/page";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Hero />
       <Features />
       <BuiltFor />
+      <Testimonials />
     </div>
   );
 }
