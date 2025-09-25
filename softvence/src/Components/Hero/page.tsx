@@ -85,7 +85,7 @@ const Hero = () => {
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ type: "spring", stiffness: 80 }}
-          className="md:pr-24 md:w-2xl"
+          className="md:pr-24"
         >
           <div
             className="rounded-3xl overflow-hidden"
