@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import { Suspense } from "react"
 import { Input } from "@/Components/ui/input"
 import Link from "next/link"
 import { useState } from "react"
@@ -9,7 +10,7 @@ import { Button } from "@/Components/ui/button"
 import toast from "react-hot-toast"
 import { useRouter, useSearchParams } from "next/navigation"
 
-export default function ResetPasswordPage() {
+function ResetPasswordContent() {
   const [newPassword, setNewPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [showNewPassword, setShowNewPassword] = useState(false)
@@ -89,7 +90,7 @@ export default function ResetPasswordPage() {
           <div className="text-center space-y-4">
             <h2 className="text-3xl font-bold text-foreground">Enter your new password.</h2>
             <p className="text-muted-foreground leading-relaxed">
-              Please enter the email address associated with your account, and we'll email you a link to reset your
+              Please enter the email address associated with your account, and we&apos;ll email you a link to reset your
               password.
             </p>
           </div>
@@ -156,5 +157,13 @@ export default function ResetPasswordPage() {
         </div>
       </main>
     </div>
+  )
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<div />}> 
+      <ResetPasswordContent />
+    </Suspense>
   )
 }
