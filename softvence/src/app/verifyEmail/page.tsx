@@ -142,7 +142,7 @@ function VerifyEmailContent() {
   }
 
   return (
-    <div className="max-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col">
       {/* Main Content */}
       <main className="flex-1 flex flex-col items-center justify-center px-6 pb-20">
         <div className="max-w-md w-full space-y-8">

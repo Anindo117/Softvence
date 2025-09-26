@@ -6,7 +6,7 @@ const BuiltFor = () => {
   return (
     <div className="lg:mt-44">
       <h1
-        className="text-5xl font-bold text-center p-2"
+        className="text-5xl font-bold text-center p-2 text-shadow-lg"
         style={{
           backgroundImage: "url('/images/Frame 2147227474.png')",
           backgroundRepeat: "no-repeat",
@@ -17,8 +17,8 @@ const BuiltFor = () => {
         Build for Everyone
       </h1>
       <p className="text-center mt-3 lg:mb-10 w-full lg:max-w-xl mx-auto text-sm text-gray-600">
-        Whether you&aposre booking services, managing tasks, or running
-        operations, we&aposve designed the perfect experience for you.
+        Whether you&apos;re booking services, managing tasks, or running
+        operations, we&apos;ve designed the perfect experience for you.
       </p>
 
       <div className="lg:pt-2" style={{

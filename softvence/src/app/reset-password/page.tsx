@@ -2,7 +2,6 @@
 
 import type React from "react"
 import { Input } from "@/Components/ui/input"
-import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
 import { Eye, EyeOff } from "lucide-react"

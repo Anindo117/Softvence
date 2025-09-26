@@ -217,7 +217,7 @@ export default function RegisterPage() {
             </Button>
 
             {/* Divider */}
-            <div className="relative">
+            <div className="relative md:mt-12 my-6">
               <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t border-border" />
               </div>
@@ -250,7 +250,7 @@ export default function RegisterPage() {
             </Button>
 
             {/* Sign In Link */}
-            <div className="text-center">
+            <div className="text-center mt-8">
               <p className="text-sm text-muted-foreground">
                 Don&apos;t have an account?{" "}
                 <Link href="/register" className="text-[#49AE44] hover:underline font-medium">
