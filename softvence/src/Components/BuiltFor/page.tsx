@@ -17,8 +17,8 @@ const BuiltFor = () => {
         Build for Everyone
       </h1>
       <p className="text-center mt-3 w-full lg:max-w-xl mx-auto text-sm text-gray-600">
-        Whether you're booking services, managing tasks, or running operations,
-        we've designed the perfect experience for you.
+        Whether you&aposre booking services, managing tasks, or running operations,
+        we&aposve designed the perfect experience for you.
       </p>
 
       {/* Users section */}

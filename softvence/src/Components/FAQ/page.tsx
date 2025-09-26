@@ -1,5 +1,3 @@
-import { div } from "framer-motion/client";
-
 const FAQ = () => {
   return (
     <div

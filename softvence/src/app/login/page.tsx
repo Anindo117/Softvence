@@ -12,7 +12,6 @@ import { useRouter } from "next/navigation"
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
     email: "",
@@ -197,7 +196,7 @@ export default function LoginPage() {
             {/* Sign In Link */}
             <div className="text-center">
               <p className="text-sm text-muted-foreground">
-                Don't have an account?{" "}
+                Don&apost have an account?{" "}
                 <Link href="/register" className="text-[#49AE44] hover:underline font-medium">
                   Get started
                 </Link>

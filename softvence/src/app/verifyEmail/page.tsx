@@ -2,14 +2,13 @@
 
 import { Button } from "@/Components/ui/button"
 import { Input } from "@/Components/ui/input"
-import Image from "next/image"
 import Link from "next/link"
-import { useState, useRef, useEffect } from "react"
+import { Suspense, useState, useRef, useEffect } from "react"
 import { ChevronLeft } from "lucide-react"
 import toast from "react-hot-toast"
 import { useRouter, useSearchParams } from "next/navigation"
 
-export default function VerifyEmailPage() {
+function VerifyEmailContent() {
   const [codes, setCodes] = useState(["", "", "", "", "", ""]) 
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -163,7 +162,7 @@ export default function VerifyEmailPage() {
           <div className="text-center space-y-4">
             <h2 className="text-3xl font-bold text-foreground">Please check your email!</h2>
             <p className="text-muted-foreground leading-relaxed">
-              We've emailed a 6-digit confirmation code to{" "}
+              We&aposve emailed a 6-digit confirmation code to{" "}
               <span className="text-foreground font-medium">{email || "your email"}</span>, please enter the code in below box to
               verify your email.
             </p>
@@ -201,7 +200,7 @@ export default function VerifyEmailPage() {
             {/* Resend Code */}
             <div className="text-center">
               <p className="text-sm text-muted-foreground">
-                Don't have a code?{" "}
+                Don&apost have a code?{" "}
                 <button type="button" onClick={handleResend}  className="text-[#3BA334] hover:underline font-medium disabled:opacity-50 disabled:cursor-not-allowed">
                   {isResending ? "Sending..." : "Resend code"}
                 </button>
@@ -211,5 +210,13 @@ export default function VerifyEmailPage() {
         </div>
       </main>
     </div>
+  )
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={<div />}> 
+      <VerifyEmailContent />
+    </Suspense>
   )
 }
