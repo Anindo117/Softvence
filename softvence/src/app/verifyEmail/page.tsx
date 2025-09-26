@@ -4,13 +4,26 @@ import { Button } from "@/Components/ui/button"
 import { Input } from "@/Components/ui/input"
 import Image from "next/image"
 import Link from "next/link"
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { ChevronLeft } from "lucide-react"
+import toast from "react-hot-toast"
+import { useRouter, useSearchParams } from "next/navigation"
 
 export default function VerifyEmailPage() {
-  const [codes, setCodes] = useState(["2", "2", "2", "2", "", ""])
+  const [codes, setCodes] = useState(["", "", "", "", "", ""]) 
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const [isResending, setIsResending] = useState(false)
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const [email, setEmail] = useState("")
+
+  useEffect(() => {
+    const qpEmail = (searchParams.get("email") || searchParams.get("user_email") || "").trim()
+    if (qpEmail) {
+      setEmail(qpEmail)
+    }
+  }, [searchParams])
 
   const handleCodeChange = (index: number, value: string) => {
     if (value.length > 1) return
@@ -44,6 +57,91 @@ export default function VerifyEmailPage() {
     setCodes(newCodes)
   }
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const otp = codes.join("")
+
+    // console.log(email, otp);
+
+    const isValidEmail = (value: string) => /[^\s@]+@[^\s@]+\.[^\s@]+/.test(value)
+    if (!email) {
+      toast.error("Email is required")
+      return
+    }
+    if (!isValidEmail(email)) {
+      toast.error("Enter a valid email address")
+      return
+    }
+
+    if (!/^\d{6}$/.test(otp)) {
+      toast.error("Enter the 6-digit code")
+      return
+    }
+
+    setIsLoading(true)
+    try {
+      const response = await fetch("https://apitest.softvencefsd.xyz/api/verify_otp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, otp }),
+      })
+
+      const data = await response.json().catch(() => ({}))
+
+      if (response.ok) {
+        toast.success(data.message || "Email verified successfully!")
+        router.push("/success-register")
+      } else {
+        toast.error(data.message || "Invalid or expired code. Please try again.")
+      }
+    } catch (error) {
+      console.error("Verify OTP error:", error)
+      toast.error("Network error. Please try again.")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleResend = async () => {
+    const isValidEmail = (value: string) => /[^\s@]+@[^\s@]+\.[^\s@]+/.test(value)
+    const emailTrimmed = (email || "").trim()
+
+    if (!emailTrimmed) {
+      toast.error("Email is required")
+      return
+    }
+    if (!isValidEmail(emailTrimmed)) {
+      toast.error("Enter a valid email address")
+      return
+    }
+
+    setIsResending(true)
+    try {
+      const response = await fetch("https://apitest.softvencefsd.xyz/api/resend_otp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: emailTrimmed }),
+      })
+
+      const data = await response.json().catch(() => ({}))
+
+      if (response.ok) {
+        toast.success(data.message || "OTP resent successfully")
+      } else {
+        toast.error(data.message || "Failed to resend code. Please try again.")
+      }
+    } catch (error) {
+      console.error("Resend OTP error:", error)
+      toast.error("Network error. Please try again.")
+    } finally {
+      setIsResending(false)
+    }
+  }
+
   return (
     <div className="max-h-screen bg-background flex flex-col">
 
@@ -66,13 +164,13 @@ export default function VerifyEmailPage() {
             <h2 className="text-3xl font-bold text-foreground">Please check your email!</h2>
             <p className="text-muted-foreground leading-relaxed">
               We've emailed a 6-digit confirmation code to{" "}
-              <span className="text-foreground font-medium">acb@domain</span>, please enter the code in below box to
+              <span className="text-foreground font-medium">{email || "your email"}</span>, please enter the code in below box to
               verify your email.
             </p>
           </div>
 
           {/* Verification Code Form */}
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             {/* Code Input Fields */}
             <div className="flex justify-center gap-3">
               {codes.map((code, index) => (
@@ -104,8 +202,8 @@ export default function VerifyEmailPage() {
             <div className="text-center">
               <p className="text-sm text-muted-foreground">
                 Don't have a code?{" "}
-                <button type="button" className="text-[#3BA334] hover:underline font-medium">
-                  Resend code
+                <button type="button" onClick={handleResend}  className="text-[#3BA334] hover:underline font-medium disabled:opacity-50 disabled:cursor-not-allowed">
+                  {isResending ? "Sending..." : "Resend code"}
                 </button>
               </p>
             </div>

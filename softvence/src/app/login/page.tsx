@@ -15,7 +15,7 @@ export default function LoginPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
-    email: "eddie_lake@gmail.com",
+    email: "",
     password: "",
     rememberMe: true,
   })
@@ -35,7 +35,23 @@ export default function LoginPage() {
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault() 
+    e.preventDefault()
+    const isValidEmail = (value: string) => /[^\s@]+@[^\s@]+\.[^\s@]+/.test(value)
+    const emailTrimmed = (formData.email || '').trim()
+
+    if (!emailTrimmed) {
+      toast.error("Email is required")
+      return
+    }
+    if (!isValidEmail(emailTrimmed)) {
+      toast.error("Enter a valid email address")
+      return
+    }
+    if (!formData.password) {
+      toast.error("Password is required")
+      return
+    }
+
     console.log(formData);
     setIsLoading(true)
     
@@ -46,7 +62,7 @@ export default function LoginPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: formData.email,
+          email: emailTrimmed,
           password: formData.password,
           remember_me: formData.rememberMe,
         }),

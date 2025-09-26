@@ -10,13 +10,25 @@ import toast from "react-hot-toast"
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [emailError, setEmailError] = useState("")
+
+  const isValidEmail = (value: string) => {
+    return /[^\s@]+@[^\s@]+\.[^\s@]+/.test(value)
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!email) {
+      setEmailError("Email is required")
       toast.error("Please enter your email address")
       return
     }
+    if (!isValidEmail(email)) {
+      setEmailError("Enter a valid email address")
+      toast.error("Enter a valid email address")
+      return
+    }
+    setEmailError("")
 
     setIsLoading(true)
     try {
@@ -32,6 +44,7 @@ export default function ForgotPasswordPage() {
 
       if (response.ok) {
         toast.success(data.message || "If your email is registered, a reset link has been sent.")
+        
         setEmail("")
       } else {
         toast.error(data.message || "Unable to send reset link. Please try again.")
@@ -82,6 +95,9 @@ export default function ForgotPasswordPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 className="h-12"
               />
+              {emailError ? (
+                <p className="text-sm text-red-500">{emailError}</p>
+              ) : null}
             </div>
 
             {/* Reset Password Button */}

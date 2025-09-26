@@ -15,7 +15,7 @@ export default function RegisterPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
-    firstName: "Meraj",
+    firstName: "",
     lastName: "",
     email: "",
     password: "",
@@ -81,7 +81,7 @@ export default function RegisterPage() {
       
       if (response.ok) {
         toast.success("Registration successful! Please check your email for verification.")
-        router.push('/login')
+        router.push(`/verifyEmail?email=${encodeURIComponent(formData.email)}`)
         resetForm()
       } else {
         toast.error(data.message || "Registration failed. Please try again.")

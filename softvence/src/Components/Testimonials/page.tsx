@@ -16,7 +16,7 @@ const Testimonials = () => {
     },
     {
       img: "/images/Ellipse 452-2.png",
-      name: "Farzana H.",
+      name: "Farzana ",
       role: "Rafiq M., Homeowner",
       text: "As a client, I love being able to see exactly when my service is on the way. No calls, no guessing — just clear updates.",
     },
