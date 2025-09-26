@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#052d26] text-white mt-12 p-5" 
+    <footer className="bg-[#052d26] text-white mt-40 p-5" 
     style={{
       backgroundImage: "url('/images/Vector 3.png'), url('/images/Vector 2.png'), url('/images/Vector 4.png')",
       backgroundRepeat: "no-repeat, no-repeat, no-repeat",

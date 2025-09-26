@@ -252,7 +252,7 @@ export default function RegisterPage() {
             {/* Sign In Link */}
             <div className="text-center">
               <p className="text-sm text-muted-foreground">
-                Don&apost have an account?{" "}
+                Don&apos;t have an account?{" "}
                 <Link href="/register" className="text-[#49AE44] hover:underline font-medium">
                   Get started
                 </Link>

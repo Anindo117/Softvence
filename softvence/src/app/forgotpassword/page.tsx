@@ -6,11 +6,13 @@ import Link from "next/link"
 import { useState } from "react"
 import { ChevronLeft } from "lucide-react"
 import toast from "react-hot-toast"
+import { useRouter } from "next/navigation"
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [emailError, setEmailError] = useState("")
+  const router = useRouter()
 
   const isValidEmail = (value: string) => {
     return /[^\s@]+@[^\s@]+\.[^\s@]+/.test(value)
@@ -44,7 +46,7 @@ export default function ForgotPasswordPage() {
 
       if (response.ok) {
         toast.success(data.message || "If your email is registered, a reset link has been sent.")
-        
+        router.push(`/forgot-verify-otp?email=${encodeURIComponent(email)}`)
         setEmail("")
       } else {
         toast.error(data.message || "Unable to send reset link. Please try again.")

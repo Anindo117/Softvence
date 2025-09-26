@@ -8,7 +8,7 @@ import { ChevronLeft } from "lucide-react"
 import toast from "react-hot-toast"
 import { useRouter, useSearchParams } from "next/navigation"
 
-function VerifyEmailContent() {
+function ForgotVerifyEmailContent() {
   const [codes, setCodes] = useState(["", "", "", "", "", ""]) 
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -79,7 +79,7 @@ function VerifyEmailContent() {
 
     setIsLoading(true)
     try {
-      const response = await fetch("https://apitest.softvencefsd.xyz/api/verify_otp", {
+      const response = await fetch("https://apitest.softvencefsd.xyz/api/forgot-verify-otp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -212,10 +212,10 @@ function VerifyEmailContent() {
   )
 }
 
-export default function VerifyEmailPage() {
+export default function ForgotVerifyEmailPage() {
   return (
     <Suspense fallback={<div />}> 
-      <VerifyEmailContent />
+      <ForgotVerifyEmailContent />
     </Suspense>
   )
 }
