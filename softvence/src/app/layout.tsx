@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Public_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/Components/Navbar/page";
-import Footer from "@/Components/Footer/page";
 import { Toaster } from "react-hot-toast";
 
 const publicSans = Public_Sans({
@@ -37,7 +36,6 @@ export default function RootLayout({
         <main className="">
           {children}
         </main>
-        <Footer />
         <Toaster 
           position="top-right"
           toastOptions={{

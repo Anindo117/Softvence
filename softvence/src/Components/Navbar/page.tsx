@@ -3,9 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   const toggle = () => setIsOpen((v) => !v);
   const close = () => setIsOpen(false);
@@ -25,15 +28,17 @@ const Navbar = () => {
           </div>
         </Link>
 
-        {/* Desktop CTA */}
-        <div className="hidden md:flex">
-          <Link
-            href="/register"
-            className="bg-[#3BA334] text-white px-7 py-2 shadow-lg shadow-[#39a4323d] font-bold rounded-lg hover:opacity-90 transition"
-          >
-            Get Started
-          </Link>
-        </div>
+        {/* Desktop CTA (home only) */}
+        {isHome && (
+          <div className="hidden md:flex">
+            <Link
+              href="/register"
+              className="bg-[#3BA334] text-white px-7 py-2 shadow-lg shadow-[#39a4323d] font-bold rounded-lg hover:opacity-90 transition"
+            >
+              Get Started
+            </Link>
+          </div>
+        )}
 
         {/* Mobile hamburger */}
         <button
@@ -72,22 +77,24 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile menu panel */}
-      <div
-        className={`md:hidden transition-[max-height] duration-300 ease-in-out overflow-hidden ${
-          isOpen ? "max-h-40" : "max-h-0"
-        }`}
-      >
-        <div className="px-4 pb-4">
-          <Link
-            href="/register"
-            className="block w-full text-center bg-[#3BA334] text-white px-4 py-2 rounded-md hover:opacity-90 transition"
-            onClick={close}
-          >
-            Get Started
-          </Link>
+      {/* Mobile menu panel (home only) */}
+      {isHome && (
+        <div
+          className={`md:hidden transition-[max-height] duration-300 ease-in-out overflow-hidden ${
+            isOpen ? "max-h-40" : "max-h-0"
+          }`}
+        >
+          <div className="px-4 pb-4">
+            <Link
+              href="/register"
+              className="block w-full text-center bg-[#3BA334] text-white px-4 py-2 rounded-md hover:opacity-90 transition"
+              onClick={close}
+            >
+              Get Started
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
     </nav>
   );
 };
