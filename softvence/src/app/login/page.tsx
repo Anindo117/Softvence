@@ -10,84 +10,59 @@ import { Eye, EyeOff } from "lucide-react"
 import toast from "react-hot-toast"
 import { useRouter } from "next/navigation"
 
-export default function RegisterPage() {
+export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
-    firstName: "Meraj",
-    lastName: "",
-    email: "",
+    email: "eddie_lake@gmail.com",
     password: "",
-    confirmPassword: "",
-    agreeToTerms: true,
+    rememberMe: true,
   })
-
-  const router = useRouter()
 
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
   }
 
   const resetForm = () => {
-    setFormData({
-      firstName: "",
-      lastName: "",
+    setFormData({ 
       email: "",
       password: "",
-      confirmPassword: "",
-      agreeToTerms: false,
+      rememberMe: false,
     })
   }
 
+  const router = useRouter();
+
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    // Basic validation
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.password) {
-      toast.error("Please fill in all required fields")
-      return
-    }
-    
-    if (formData.password !== formData.confirmPassword) {
-      toast.error("Passwords do not match")
-      return
-    }
-    
-    if (!formData.agreeToTerms) {
-      toast.error("Please agree to the terms and conditions")
-      return
-    }
+    e.preventDefault() 
     console.log(formData);
     setIsLoading(true)
     
     try {
-      const response = await fetch("https://apitest.softvencefsd.xyz/api/register", {
+      const response = await fetch("https://apitest.softvencefsd.xyz/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          first_name: formData.firstName,
-          last_name: formData.lastName,
           email: formData.email,
           password: formData.password,
-          password_confirmation: formData.confirmPassword,
-          terms: formData.agreeToTerms
+          remember_me: formData.rememberMe,
         }),
       })
       
       const data = await response.json()
       
       if (response.ok) {
-        toast.success("Registration successful! Please check your email for verification.")
-        router.push('/login')
+        toast.success("Login successful!")
         resetForm()
+        router.push('/')
       } else {
-        toast.error(data.message || "Registration failed. Please try again.")
+        toast.error(data.message || "Login failed. Please try again.")
       }
     } catch (error) {
-      console.error("Registration error:", error)
+      console.error("Login error:", error)
       toast.error("Network error. Please check your connection and try again.")
     } finally {
       setIsLoading(false)
@@ -107,33 +82,12 @@ export default function RegisterPage() {
 
           {/* Registration Form */}
           <form className="space-y-6" onSubmit={handleSubmit}>
-            {/* Name Fields */}
-            <div className="grid grid-cols-2 gap-4 items-center">
-              <div className="space-y-2">
-                
-                <Input
-                  id="firstName"
-                  type="text"
-                placeholder="First name"
-                  value={formData.firstName}
-                  onChange={(e) => handleInputChange("firstName", e.target.value)}
-                  className="h-12"
-                />
-              </div>
-              <div className="space-y-2">
-                <Input
-                  id="lastName"
-                  type="text"
-                  placeholder="Last name"
-                  value={formData.lastName}
-                  onChange={(e) => handleInputChange("lastName", e.target.value)}
-                  className="h-12"
-                />
-              </div>
-            </div>
 
             {/* Email Field */}
             <div className="space-y-2">
+            <Label htmlFor="email" className="text-sm text-muted-foreground">
+                Email address
+              </Label>
               <Input
                 id="email"
                 type="email"
@@ -165,55 +119,30 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            {/* Confirm Password Field */}
-            <div className="space-y-2">
-              <div className="relative">
-                <Input
-                  id="confirmPassword"
-                  type={showConfirmPassword ? "text" : "password"}
-                  placeholder="Confirm Password"
-                  value={formData.confirmPassword}
-                  onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
-                  className="h-12 pr-10"
+            {/* Remember Me and Forgot Password */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="remember"
+                  checked={formData.rememberMe}
+                  onCheckedChange={(checked) => handleInputChange("rememberMe", checked as boolean)}
                 />
-                <button
-                  type="button"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                >
-                  {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                </button>
+                <Label htmlFor="remember" className="text-sm text-muted-foreground">
+                  Remember me
+                </Label>
               </div>
+              <Link href="/forgotpassword" className="text-sm text-[#49AE44] hover:underline font-medium">
+                Forgot password?
+              </Link>
             </div>
 
-            {/* Terms Agreement */}
-            <div className="flex items-start space-x-3">
-              <Checkbox
-                id="terms"
-                checked={formData.agreeToTerms}
-                onCheckedChange={(checked) => handleInputChange("agreeToTerms", checked as boolean)}
-                className="mt-1"
-              />
-              <Label htmlFor="terms" className="text-sm text-muted-foreground leading-relaxed">
-                I agree to Tech Takes{" "}
-                <Link href="/terms" className="text-foreground underline hover:no-underline">
-                  Terms of Service
-                </Link>{" "}
-                and{" "}
-                <Link href="/privacy" className="text-foreground underline hover:no-underline">
-                  Privacy Policy
-                </Link>
-                .
-              </Label>
-            </div>
-
-            {/* Create Account Button */}
+            {/* Login Button */}
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full mt-8 h-12 bg-[#3BA334] text-white px-7 py-2 shadow-lg shadow-[#39a4323d] font-bold rounded-lg hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full mt-6 h-12 bg-[#3BA334] text-white px-7 py-2 shadow-lg shadow-[#39a4323d] font-bold rounded-lg hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? "Creating Account..." : "Create Account"}
+              {isLoading ? "Loging In..." : "Login"}
             </Button>
 
             {/* Divider */}
@@ -246,7 +175,7 @@ export default function RegisterPage() {
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                 />
               </svg>
-              Continue with Google
+              Log in with Google
             </Button>
 
             {/* Sign In Link */}

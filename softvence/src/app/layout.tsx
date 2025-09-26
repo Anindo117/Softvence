@@ -3,6 +3,7 @@ import { Public_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/Components/Navbar/page";
 import Footer from "@/Components/Footer/page";
+import { Toaster } from "react-hot-toast";
 
 const publicSans = Public_Sans({
   subsets: ["latin"],
@@ -37,6 +38,30 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <Toaster 
+          position="top-right"
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: '#363636',
+              color: '#fff',
+            },
+            success: {
+              duration: 4000,
+              iconTheme: {
+                primary: '#3BA334',
+                secondary: '#fff',
+              },
+            },
+            error: {
+              duration: 4000,
+              iconTheme: {
+                primary: '#ef4444',
+                secondary: '#fff',
+              },
+            },
+          }}
+        />
       </body>
     </html>
   );
